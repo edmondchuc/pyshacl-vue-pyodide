@@ -48,12 +48,13 @@ const onValidate = () => {
     </div>
     <div>
       <v-textarea
+        class="textarea"
         v-model="inputShapes"
         label="Input shapes (Turtle)"
         variant="solo"
         required
         rows="15"
-        row-height="15"
+        row-height="12"
       ></v-textarea>
     </div>
 
@@ -79,12 +80,13 @@ const onValidate = () => {
 
       <div class="">
         <v-textarea
+          class="textarea"
           v-model="inputData"
           label="Input data (Turtle)"
           variant="solo"
           required
           rows="15"
-          row-height="15"
+          row-height="12"
         ></v-textarea>
       </div>
     </div>
@@ -108,3 +110,11 @@ const onValidate = () => {
     >
   </v-sheet>
 </template>
+
+<style lang="scss" scoped>
+@import "./scss/variables.scss";
+.textarea {
+  font-family: $code-font-family;
+  font-size: $code-font-size;
+}
+</style>
