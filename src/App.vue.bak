@@ -1,0 +1,60 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { loadScript } from "vue-plugin-load-script";
+import hello from "./assets/hello.py?raw";
+
+let name = ref("");
+let pyodide = null;
+let pyodideLoaded = ref(false);
+let errorMsg = ref<string>("");
+let output = ref<string>("");
+
+const loadPythonModules = async () => {
+  pyodide.runPython(hello);
+};
+
+const initPyodide = async () => {
+  /* global loadPyodide */
+  try {
+    await loadScript(
+      "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"
+    );
+    pyodide = await loadPyodide({
+      indexURL: "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/",
+    });
+    // load pandas lib
+    if (pyodide != null) {
+      await pyodide.loadPackage("micropip");
+      const micropip = pyodide.pyimport("micropip");
+      await micropip.install("rdflib");
+
+      await loadPythonModules();
+
+      pyodideLoaded.value = true;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      errorMsg.value = error.toString();
+    }
+  }
+};
+
+onMounted(async () => {
+  await initPyodide();
+});
+
+const onSubmit = () => {
+  console.log(`Clicked with value: ${name.value}`);
+  let pythonCall = `hello("${name.value}")`;
+  output.value = pyodide.runPython(pythonCall);
+  console.log(`${output.value}`);
+};
+</script>
+
+<template>
+  <v-text-field label="Enter your name" v-model="name"></v-text-field>
+  <v-btn @click="onSubmit">Submit</v-btn>
+  <p>Pyodide loaded: {{ pyodideLoaded }}</p>
+  <pre>Errors: <br>{{ errorMsg }}</pre>
+  <p>Output: {{ output }}</p>
+</template>
