@@ -113,8 +113,9 @@ const onValidate = () => {
 
     <div v-if="isLoading" class="loader">
       <div class="d-flex flex-row">
-        <v-alert text="Loading Python runtime..."
+        <v-alert text="Loading Python runtime"
           ><v-progress-circular
+            class="ml-2"
             indeterminate
             :size="30"
             :width="3"
