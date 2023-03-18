@@ -52,9 +52,10 @@ const onValidate = () => {
         v-model="inputShapes"
         label="Input shapes (Turtle)"
         variant="solo"
-        required
         rows="15"
         row-height="12"
+        spellcheck="false"
+        :disabled="isLoading"
       ></v-textarea>
     </div>
 
@@ -84,9 +85,10 @@ const onValidate = () => {
           v-model="inputData"
           label="Input data (Turtle)"
           variant="solo"
-          required
           rows="15"
           row-height="12"
+          spellcheck="false"
+          :disabled="isLoading"
         ></v-textarea>
       </div>
     </div>
@@ -108,6 +110,18 @@ const onValidate = () => {
         >
       </code></v-card
     >
+
+    <div v-if="isLoading" class="loader">
+      <div class="d-flex flex-row">
+        <v-alert text="Loading Python runtime..."
+          ><v-progress-circular
+            indeterminate
+            :size="30"
+            :width="3"
+          ></v-progress-circular
+        ></v-alert>
+      </div>
+    </div>
   </v-sheet>
 </template>
 
@@ -118,5 +132,13 @@ const onValidate = () => {
   font-family: $code-font-family;
   font-size: $code-font-size;
   white-space: nowrap;
+}
+
+.loader {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
