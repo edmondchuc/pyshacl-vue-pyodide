@@ -113,8 +113,10 @@ const onValidate = () => {
 
 <style lang="scss" scoped>
 @import "./scss/variables.scss";
-.textarea {
+
+.textarea :deep(.v-field__input) {
   font-family: $code-font-family;
   font-size: $code-font-size;
+  white-space: nowrap;
 }
 </style>
