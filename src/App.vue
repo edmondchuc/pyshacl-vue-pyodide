@@ -119,7 +119,7 @@ const onValidate = () => {
             indeterminate
             :size="30"
             :width="3"
-          ></v-progress-circular
+          ></v-progress-circular  
         ></v-alert>
       </div>
     </div>
@@ -132,7 +132,7 @@ const onValidate = () => {
 .textarea :deep(.v-field__input) {
   font-family: $code-font-family;
   font-size: $code-font-size;
-  white-space: nowrap;
+  white-space: pre;
 }
 
 .loader {
